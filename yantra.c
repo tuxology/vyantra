@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define NUM_REGS 4
 unsigned regs[NUM_REGS];
@@ -58,17 +60,36 @@ halt            // 0x00000000
 
 */
 
-unsigned program[] = { 0x02000028, 0x02100002, 0x03201000, 0x00000000 };
+#define BINARY "./test.yex"
+/*unsigned program[] = { 0x02000028, 0x02100002, 0x03201000, 0x00000000 };*/
+unsigned insn_buff[1024] = { 0 };
 
 /* program counter */
 int pc = 0;
 
 /* fetch the next word from the program */
 int fetch(){
-    FILE *fp;
-    fp = fopen()
-    return program[pc++];
+    return insn_buff[pc++];
+    /*return program[pc++];*/
 }
+
+/* Prepare binary */
+void prep_binary(char* bin){
+    unsigned int i = 0;
+    FILE *fp;
+    unsigned char insn[4];
+    ssize_t read;
+    fp = fopen(bin, "rb");
+    if (fp == NULL)
+        exit(EXIT_FAILURE);
+
+    while(read){
+        read = fread(&insn, sizeof(insn), 1, fp);
+        memcpy(&insn_buff[i], &insn, sizeof(insn));
+        i++;
+    }
+}
+
 
 /* instruction fields */
 int instr_num   = 0;
@@ -78,7 +99,7 @@ int r3          = 0;
 int val         = 0;
 
 /* decode a word */
-void decode(int64_t instr){
+void decode(int instr){
     instr_num   = (instr & 0xFF000000) >> 24;
     r1          = (instr & 0x00F00000) >> 20;
     r2          = (instr & 0x000F0000) >> 16;   // For operating on regs
@@ -140,10 +161,11 @@ void run(){
         decode(instr);
         eval();
     }
-    showRegs();
 }
 
 int main(int argc, const char * argv[]){
+    prep_binary(BINARY);
+    int j = 0;
     run();
     return 0;
 }
