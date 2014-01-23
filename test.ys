@@ -1,0 +1,6 @@
+!start
+    load B #28
+    load C #2
+    add A B C
+    halt
+!end

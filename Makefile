@@ -1,16 +1,16 @@
 all: yas yantra
 
 yantra: yantra.o
-	g++ -g $^ -o $@
+	gcc -std=gnu99 -g $^ -o $@
 
 yantra.o: yantra.c
-	g++ -g $< -c -o $@
+	gcc -std=gnu99 -g $< -c -o $@
 
 yas: yas.o
-	g++ -g $^ -o $@
+	gcc -std=gnu99 -g $^ -o $@
 
 yas.o: yas.c
-	g++ -g $< -c -o $@
+	gcc -std=gnu99 -g $< -c -o $@
 
 .PHONY: clean
 clean:
