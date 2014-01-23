@@ -1,64 +1,16 @@
+/*
+ * yantra.c
+ * This is the core of our VM - the translator
+ *
+ * Inspired by https://en.wikibooks.org/wiki/Creating_a_Virtual_Machine/Register_VM_in_C
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #define NUM_REGS 4
 unsigned regs[NUM_REGS];
-
-/* Spec Sheet
-
-## Instruction Set
-
-------------------
-Mnemonic    Opcode
-------------------
-halt    -   00
-mov     -   01
-load    -   02
-add     -   03
-sub     -   04
-mul     -   05
-div     -   06
-and     -   07
-not     -   08
-jmp     -   09
-eq      -   0A
-lt      -   0B
-le      -   0C
-call    -   0D
-ret     -   0E
-------------------
-
-## Instruction Word
-
-An instruction word is 32 bit long.
-First 2 bytes are for the instruction opcode The next byte is the register
-number and the remaining bytes are for immediate values. Bits 11-7 are
-undefined at the moment.
-
-31   23 19    11          7    0
-+------------------------------+
-| 01 | 2 | 01 | UNDEFINED | 64 |
-+------------------------------+
-   |   |    |              |
-   |   |    |              +-------> Immediate value
-   |   |    |
-   |   |    +----------------------> Operating Registers
-   |   |
-   |   +---------------------------> Load/Store Register
-   |
-   +-------------------------------> Instruction ()
-
-*/
-
-/* sample program
-
-load B #28      // 0x02000028
-load C #2       // 0x02100002
-add  A B C      // 0x03201000
-halt            // 0x00000000
-
-*/
 
 #define BINARY "./test.yex"
 /*unsigned program[] = { 0x02000028, 0x02100002, 0x03201000, 0x00000000 };*/
