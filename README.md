@@ -71,10 +71,10 @@ An instruction word is 32 bit long. First 2 bytes are for the instruction opcode
 ### Sample Program
 
     !start
-      load B #28      
-      load C #2       
-      add  A B C      
-      halt            
+      load B #28
+      load C #2
+      add  A B C
+      halt
     !end
 
 It will translate to something like -

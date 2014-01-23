@@ -1,8 +1,9 @@
 /*
  * yantra.c
- * This is the core of our VM - the translator
  *
+ * This is the core of our VM - the translator
  * Inspired by https://en.wikibooks.org/wiki/Creating_a_Virtual_Machine/Register_VM_in_C
+ *
  */
 
 #include <stdio.h>
@@ -13,7 +14,6 @@
 unsigned regs[NUM_REGS];
 
 #define BINARY "./test.yex"
-/*unsigned program[] = { 0x02000028, 0x02100002, 0x03201000, 0x00000000 };*/
 unsigned insn_buff[1024] = { 0 };
 
 /* program counter */
@@ -22,7 +22,6 @@ int pc = 0;
 /* fetch the next word from the program */
 int fetch(){
     return insn_buff[pc++];
-    /*return program[pc++];*/
 }
 
 /* Prepare binary */

@@ -1,3 +1,11 @@
+/*
+ * yas.c
+ *
+ * This is the yantra assembler
+ *
+ */
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -50,15 +58,16 @@ int parse_file(char* source) {
     return 0;
 }
 
-int generate_bin(unsigned buff[], char* name) {
+int generate_bin(unsigned buff[], unsigned int size, char* name) {
     FILE *fp;
     fp = fopen(name, "wb");
-    fwrite(buff, sizeof(buff), 1, fp);
+    fwrite(buff, size, 1, fp);
     fclose(fp);
 }
 
 int main(int argc, char* argv[]) {
     parse_file(argv[1]);        // this is the assembly source
-    generate_bin(bytecode_buff, BINARY);
+    int size = sizeof(bytecode_buff);
+    generate_bin(bytecode_buff, size, BINARY);
     return 0;
 }
