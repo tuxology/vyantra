@@ -9,17 +9,21 @@ main: main.o yaslexer.o yasparser.o
 %.o: %.c
 	$(CC) -c -o $@ $< $(CFLAGS)
 
-main.o: main.c
-main.c: yaslexer.h yasparser.h
-yaslexer.o: yaslexer.c
-yasparser.o: yasparser.c
+main.o: main.c yaslexer.h yasparser.h
+yaslexer.o: yaslexer.c yaslexer.h
+yasparser.o: yasparser.c yasparser.h
 
-yaslexer.h yaslexer.c: yaslexer.g
-	antlr3 yaslexer.g
+# Generate C files from an ANTLR grammar
+%.tokens %.h %.c: %.g
+	antlr3 $*.g
 
+# Lexer and parser generation
+yaslexer.tokens yaslexer.h yaslexer.c: yaslexer.g
+yasparser.tokens yasparser.h yasparser.c: yasparser.g
 
-yasparser.h yasparser.c: yasparser.g
-	antlr3 yasparser.g
+# To generate the parser, we need to know what tokens the lexer will generate
+yasparser.g: yaslexer.tokens
+
 
 .PHONY: clean
 
