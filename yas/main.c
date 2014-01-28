@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
 	pyasparser parser;
 	pyaslexer lexer;
 
-	input = antlr3AsciiFileStreamNew((pANTLR3_UINT8) argv[1]);
+	input = antlr3FileStreamNew((pANTLR3_UINT8) argv[1], ANTLR3_ENC_8BIT);
 	assert(input != NULL);
 	lexer = yaslexerNew(input);
 	assert(lexer != NULL);
